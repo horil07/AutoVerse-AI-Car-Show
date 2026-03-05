@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoVerse — AI Car Showcase</title>
+  <meta name="description" content="AutoVerse: An interactive AI-powered car customization showcase. Modify colors, wheels, and themes in real-time with generative AI suggestions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loader-content">
+      <div class="loader-logo">AUTO<span>VERSE</span></div>
+      <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+      <div class="loader-text" id="loader-text">Initializing AI Engine...</div>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="hidden">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-logo">AUTO<span>VERSE</span></div>
+      <div class="header-tagline">AI-Powered Car Customization</div>
+      <div class="header-score">
+        <span class="score-label">Style Score</span>
+        <span class="score-value" id="style-score">0</span>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="main-layout">
+
+      <!-- Sidebar: Controls -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+          <div class="section-title">🎨 Car Color</div>
+          <div class="color-palette" id="color-palette">
+            <!-- Colors injected by JS -->
+          </div>
+          <div class="custom-color-row">
+            <label for="custom-color">Custom:</label>
+            <input type="color" id="custom-color" value="#e63946" />
+            <button class="btn-apply" id="btn-apply-color">Apply</button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-title">🔧 Wheel Style</div>
+          <div class="wheel-grid" id="wheel-grid">
+            <!-- Wheels injected by JS -->
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-title">💡 Interior Lighting</div>
+          <div class="lighting-options" id="lighting-options">
+            <!-- Lighting injected by JS -->
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-title">🪟 Tint Level</div>
+          <div class="slider-wrap">
+            <input type="range" id="tint-slider" min="0" max="100" value="30" class="custom-slider" />
+            <div class="slider-labels"><span>Clear</span><span>Dark</span></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center: Car Showcase -->
+      <section class="showcase-area">
+        <div class="car-stage" id="car-stage">
+          <canvas id="car-canvas" width="820" height="460"></canvas>
+          <div class="stage-reflection"></div>
+          <!-- Action Feedback -->
+          <div class="feedback-toast" id="feedback-toast"></div>
+        </div>
+
+        <!-- Theme Quick-Select -->
+        <div class="theme-bar">
+          <div class="theme-label">Quick Themes:</div>
+          <button class="theme-btn active" data-theme="sporty" id="theme-sporty">⚡ Sporty</button>
+          <button class="theme-btn" data-theme="luxury" id="theme-luxury">👑 Luxury</button>
+          <button class="theme-btn" data-theme="stealth" id="theme-stealth">🌑 Stealth</button>
+          <button class="theme-btn" data-theme="neon" id="theme-neon">🌈 Neon</button>
+          <button class="theme-btn" data-theme="offroad" id="theme-offroad">🏔️ Off-Road</button>
+        </div>
+      </section>
+
+      <!-- Right Panel: AI Suggestions -->
+      <aside class="ai-panel" id="ai-panel">
+        <div class="ai-panel-header">
+          <div class="ai-icon">🤖</div>
+          <div>
+            <div class="ai-title">AI Stylist</div>
+            <div class="ai-subtitle">Generative Suggestions</div>
+          </div>
+        </div>
+
+        <div class="ai-input-wrap">
+          <input type="text" id="ai-input" placeholder="Describe your style... (e.g. sporty red racer)" maxlength="100" />
+          <button class="btn-ai-generate" id="btn-ai-generate">
+            <span class="ai-btn-icon">✨</span> Generate
+          </button>
+        </div>
+
+        <div class="ai-thinking" id="ai-thinking" style="display:none;">
+          <div class="ai-pulse"></div>
+          <span>AI is generating suggestions...</span>
+        </div>
+
+        <div class="ai-suggestions" id="ai-suggestions">
+          <div class="ai-placeholder">
+            <div class="ai-placeholder-icon">✨</div>
+            <p>Enter a style description above and hit <b>Generate</b> to get 5 AI-powered customization suggestions!</p>
+          </div>
+        </div>
+
+        <!-- Current Config Display -->
+        <div class="config-display">
+          <div class="config-title">Current Config</div>
+          <div class="config-row"><span>Color</span><span id="cfg-color">—</span></div>
+          <div class="config-row"><span>Wheels</span><span id="cfg-wheels">—</span></div>
+          <div class="config-row"><span>Lighting</span><span id="cfg-lighting">—</span></div>
+          <div class="config-row"><span>Tint</span><span id="cfg-tint">30%</span></div>
+        </div>
+
+        <button class="btn-screenshot" id="btn-screenshot">📸 Save Look</button>
+      </aside>
+
+    </main>
+
+    <!-- Notification Bar -->
+    <div class="notif-bar" id="notif-bar" style="display:none;"></div>
+
+  </div>
+
+  <script src="car.js"></script>
+  <script src="ai.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
